@@ -1,0 +1,2 @@
+INSERT INTO L6(Valores, Descripcion) VALUES("S","Factura Normal (No Simplificada)");
+INSERT INTO L6(Valores, Descripcion) VALUES("N","Factura Simplificada (Ticket)");

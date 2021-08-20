@@ -1,0 +1,18 @@
+INSERT INTO L9(Valores, Descripcion) VALUES("01","Operación de régimen general y cualquier otro supuesto que no esté recogido en los siguientes valores");
+INSERT INTO L9(Valores, Descripcion) VALUES("02","Exportación");
+INSERT INTO L9(Valores, Descripcion) VALUES("03","Operaciones a las que se aplique el régimen especial de bienes usados, objetos de arte, antigüedades y objetos de colección");
+INSERT INTO L9(Valores, Descripcion) VALUES("04","Régimen especial del oro de inversión");
+INSERT INTO L9(Valores, Descripcion) VALUES("05","Régimen especial de las agencias de viajes");
+INSERT INTO L9(Valores, Descripcion) VALUES("06","Régimen especial grupo de entidades en IVA (Nivel Avanzados)");
+INSERT INTO L9(Valores, Descripcion) VALUES("07","Régimen especial de criterio de caja");
+INSERT INTO L9(Valores, Descripcion) VALUES("08","Operación sujetas al IPSI/IGIC (Impuesto sobre Producción, los Servicios y la Importación / Impuesto General Indirecto Canario)");
+INSERT INTO L9(Valores, Descripcion) VALUES("09","Facturación de las prestaciones de servicios de agencias de viajes que actuán como mediadoras en nombre y por cuenta ajena (disposición adicional 3ª del Reglamento de Facturación)");
+INSERT INTO L9(Valores, Descripcion) VALUES("10","Cobros por cuenta de terceros de honorarios profesionales o de derechos derivados de la propiedad industrial, de autor u otros por cuenta de sus socios, socias, asociados, asociadas, colegiados o colegiadas efectuados por sociedades, asociaciones, colegios profesionales u otras entidades que realicen estas funciones de cobro");
+INSERT INTO L9(Valores, Descripcion) VALUES("11","Operaciones de arrendamiento de local de negocio sujetas a retención");
+INSERT INTO L9(Valores, Descripcion) VALUES("12","Operaciones de arrendamiento de local de negocio no sujetas a retención");
+INSERT INTO L9(Valores, Descripcion) VALUES("13","Operaciones de arrendamiento de local de negocio sujetas y no sujetas a retención");
+INSERT INTO L9(Valores, Descripcion) VALUES("14","Factura con IVA pendiente de devengo en certificaciones de obra cuyo destinatario sea una Administración Pública");
+INSERT INTO L9(Valores, Descripcion) VALUES("15","Factura con IVA pendiente de devengo en operaciones de tracto sucesivo");
+INSERT INTO L9(Valores, Descripcion) VALUES("51","Operaciones en recargo de equivalencia");
+INSERT INTO L9(Valores, Descripcion) VALUES("52","Operaciones en régimen simplificado");
+INSERT INTO L9(Valores, Descripcion) VALUES("53","Operaciones realizadas por personas o entidades que no tenga la consideración de empresarios, empresarias o preofesionales a efectos del IVA");

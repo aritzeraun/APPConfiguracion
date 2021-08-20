@@ -1,0 +1,5 @@
+INSERT INTO L2(Valores, Descripcion) VALUES("02","NIF-IVA");
+INSERT INTO L2(Valores, Descripcion) VALUES("03","Pasaporte");
+INSERT INTO L2(Valores, Descripcion) VALUES("04","Documento oficial de identificación expedido por el país o territorio residente");
+INSERT INTO L2(Valores, Descripcion) VALUES("05","Certificado de residencia");
+INSERT INTO L2(Valores, Descripcion) VALUES("06","Otro documento probatorio");

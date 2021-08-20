@@ -1,0 +1,2 @@
+INSERT INTO L13(Valores, Descripcion) VALUES("OT","No sujeto por el artículo 7 de la Ley del IVA. Otros supuestos de no sujeción.");
+INSERT INTO L13(Valores, Descripcion) VALUES("RL","No sujeto por reglas de localización.");

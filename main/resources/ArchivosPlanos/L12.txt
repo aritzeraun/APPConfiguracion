@@ -1,0 +1,2 @@
+INSERT INTO L12(Valores, Descripcion) VALUES("S","Si");
+INSERT INTO L12(Valores, Descripcion) VALUES("N","No");

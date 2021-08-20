@@ -1,0 +1,2 @@
+INSERT INTO L11(Valores, Descripcion) VALUES("S1","Sin inversión del sujeto pasivo");
+INSERT INTO L11(Valores, Descripcion) VALUES("S2","Con inversión del sujeto pasivo");

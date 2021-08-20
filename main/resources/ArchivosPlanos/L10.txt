@@ -1,0 +1,6 @@
+INSERT INTO L10(Valores, Descripcion) VALUES("E1","Exenta por el artículo 20 de la Ley del IVA");
+INSERT INTO L10(Valores, Descripcion) VALUES("E2","Exenta por el artículo 21 de la Ley del IVA");
+INSERT INTO L10(Valores, Descripcion) VALUES("E3","Exenta por el artículo 22 de la Ley del IVA");
+INSERT INTO L10(Valores, Descripcion) VALUES("E4","Exenta por el artículo 23 y 24 de la Ley del IVA");
+INSERT INTO L10(Valores, Descripcion) VALUES("E5","Exenta por el artículo 25 de la Ley del IVA");
+INSERT INTO L10(Valores, Descripcion) VALUES("E6","Exenta por otra causa");
