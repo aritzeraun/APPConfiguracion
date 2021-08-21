@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import DataType.DatosBasicos;
 import DataType.DatosConexion;
 import DataType.DatosXML;
 import DataType.FirmaElectronica;
@@ -60,6 +61,21 @@ public class InsertData {
 		 try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
 			 	pstmt.setString(1, datosConexion.getEnlaceAlta());
 			 	pstmt.setString(2, datosConexion.getEnlaceBaja());
+			 	
+	            pstmt.executeUpdate();
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	        }
+	 }
+	 
+	 public void insertDatosBasicos(DatosBasicos datosBasicos, Connection connection) {
+		 final String sql = "INSERT INTO  DATOS_BASICOS (DirectorioArchivosXML, DirectorioRecursos, DirectorioBaseDatos)"
+		 		+ " VALUES(?,?,?);";
+		 
+		 try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+			 	pstmt.setString(1, datosBasicos.getDirectorioArchivosXML());
+			 	pstmt.setString(2, datosBasicos.getDirectorioRecursos());
+			 	pstmt.setString(2, datosBasicos.getDirectorioBaseDatos());
 			 	
 	            pstmt.executeUpdate();
 	        } catch (SQLException e) {

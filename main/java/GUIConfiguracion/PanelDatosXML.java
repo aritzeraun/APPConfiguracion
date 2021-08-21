@@ -52,7 +52,7 @@ public class PanelDatosXML extends JPanel {
 	
 
 	
-	public PanelDatosXML() {
+	public PanelDatosXML(boolean estadoEdicion) {
 			
 		setBackground(new Color(255, 204, 51));
 		setVisible(false);
@@ -74,6 +74,8 @@ public class PanelDatosXML extends JPanel {
 		add(txtIDVersionTBAI,gbc_txtIDVersionTBAI);
 		
 		textFieldIDVersionTBAI = new JTextField();
+		textFieldIDVersionTBAI.setEditable(estadoEdicion);
+		textFieldIDVersionTBAI.setEnabled(estadoEdicion);
 		textFieldIDVersionTBAI.setFocusTraversalPolicyProvider(true);
 		GridBagConstraints gbc_textFieldIDVersionTBAI = new GridBagConstraints();
 		gbc_textFieldIDVersionTBAI.insets = new Insets(0, 0, 5, 5);
@@ -102,6 +104,8 @@ public class PanelDatosXML extends JPanel {
 		add(txtRazonSocial, gbc_txtRazonSocial);
 		
 		textFieldRazonSocial= new JTextField();
+		textFieldRazonSocial.setEditable(estadoEdicion);
+		textFieldRazonSocial.setEnabled(estadoEdicion);
 		GridBagConstraints gbc_textFieldRazonSocial = new GridBagConstraints();
 		gbc_textFieldRazonSocial.insets = new Insets(0, 0, 5, 5);
 	    gbc_textFieldRazonSocial.fill = GridBagConstraints.HORIZONTAL;
@@ -120,6 +124,8 @@ public class PanelDatosXML extends JPanel {
 		add(txtNIF, gbc_txtNIF);
 		
 		textFieldNIF = new JTextField();
+		textFieldNIF.setEnabled(estadoEdicion);
+		textFieldNIF.setEditable(estadoEdicion);
 		GridBagConstraints gbc_textFieldNIF = new GridBagConstraints();
 		gbc_textFieldNIF.insets = new Insets(0, 0, 5, 5);
 		gbc_textFieldNIF.fill = GridBagConstraints.HORIZONTAL;
@@ -138,6 +144,7 @@ public class PanelDatosXML extends JPanel {
 		add(txtTipoDeFactura, gbc_txtTipoDeFactura);
 		
 		BoxTipoFactura = new JComboBox<String>();
+		BoxTipoFactura.setEnabled(estadoEdicion);
 		//Cargar datos de Tipo de Factura -L6-
 				cargarDatos(6);
 		GridBagConstraints gbc_BoxTipoFactura = new GridBagConstraints();
@@ -157,6 +164,7 @@ public class PanelDatosXML extends JPanel {
 		
 		
 		BoxClaveRegimen = new JComboBox <String>();
+		BoxClaveRegimen.setEnabled(estadoEdicion);
 		//Cargar datos de Clave de Regimen -L9-
 		cargarDatos(9);
 		BoxClaveRegimen.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -177,6 +185,7 @@ public class PanelDatosXML extends JPanel {
 		add(txtCausaExencion, gbc_txtCausaExencion);
 		
 		BoxCausaExencion = new JComboBox<String>();
+		BoxCausaExencion.setEnabled(estadoEdicion);
 		//Cargar datos de Causa de Exencion -L10-
 				cargarDatos(10);
 		GridBagConstraints gbc_BoxCausaExencion = new GridBagConstraints();
@@ -195,6 +204,7 @@ public class PanelDatosXML extends JPanel {
 		add(txtTipoNoExenta, gbc_txtTipoNoExenta);
 		
 		BoxTipoNoExenta = new JComboBox<String>();
+		BoxTipoNoExenta.setEnabled(estadoEdicion);
 		//Cargar datos de Tipo No Exento -L11-
 				cargarDatos(11);
 				
@@ -213,6 +223,7 @@ public class PanelDatosXML extends JPanel {
 		add(txtOperacionRecargo, gbc_txtOperacionRecargo);
 		
 		BoxOperacionRecargo = new JComboBox<String>();
+		BoxOperacionRecargo.setEnabled(estadoEdicion);
 		//Cargar datos de Operacion Recargo -L12-
 				cargarDatos(12);
 				
@@ -232,6 +243,7 @@ public class PanelDatosXML extends JPanel {
 		add(txtCausaNoSujecion, gbc_txtCausaNoSujecion);
 		
 		BoxCausaNoSujecion = new JComboBox<String>();
+		BoxCausaNoSujecion.setEnabled(estadoEdicion);
 		//Cargar datos de Causa No Sujeta -L13-
 				cargarDatos(13);
 		GridBagConstraints gbc_BoxCausaNoSujecion = new GridBagConstraints();
@@ -240,15 +252,92 @@ public class PanelDatosXML extends JPanel {
 		gbc_BoxCausaNoSujecion.gridx = 1;
 		gbc_BoxCausaNoSujecion.gridy = 17;
 		add(BoxCausaNoSujecion, gbc_BoxCausaNoSujecion);
-
+		
+		cargarDatosSeleccionados();
 	}
 	 
-	public void cargarDatos(int tipo) {
+	public void cargarDatosSeleccionados() {
 		DBManager manager = new DBManager();
 		manager.connect();
 		Connection connection =manager.connection;
 		SelectData selection = new SelectData();
 		
+		DatosXML datos = selection.selectDatosXML(connection);
+		
+		if(datos != null) {
+			textFieldIDVersionTBAI.setText(datos.getIDVersionTBAI());
+			textFieldNIF.setText(datos.getNIF());
+			textFieldRazonSocial.setText(datos.getRazonSocial());
+			
+			//se selecciona la opcion guarda por ultima vez en el campo L6
+			for (int i = 0; i < BoxTipoFactura.getItemCount(); i++) {
+				String texto = BoxTipoFactura.getItemAt(i).toString();
+				texto = texto.substring(0, 2);
+				
+				if(texto.equals(datos.getL6())) {
+					BoxTipoFactura.setSelectedIndex(i);
+				}
+			}
+			
+			//se selecciona la opcion guarda por ultima vez en el campo L9
+			for (int i = 0; i < BoxClaveRegimen.getItemCount(); i++) {
+				String texto = BoxClaveRegimen.getItemAt(i).toString();
+				texto = texto.substring(0, 2);
+				
+				if(texto.equals(datos.getL6())) {
+					BoxClaveRegimen.setSelectedIndex(i);
+				}
+			}
+			
+			//se selecciona la opcion guarda por ultima vez en el campo L10
+			for (int i = 0; i < BoxCausaExencion.getItemCount(); i++) {
+				String texto = BoxCausaExencion.getItemAt(i).toString();
+				texto = texto.substring(0, 2);
+				
+				if(texto.equals(datos.getL6())) {
+					BoxCausaExencion.setSelectedIndex(i);
+				}
+			}
+			
+			//se selecciona la opcion guarda por ultima vez en el campo L11
+			for (int i = 0; i < BoxTipoNoExenta.getItemCount(); i++) {
+				String texto = BoxTipoNoExenta.getItemAt(i).toString();
+				texto = texto.substring(0, 2);
+				
+				if(texto.equals(datos.getL6())) {
+					BoxTipoNoExenta.setSelectedIndex(i);
+				}
+			}
+			
+			//se selecciona la opcion guarda por ultima vez en el campo L12
+			for (int i = 0; i < BoxOperacionRecargo.getItemCount(); i++) {
+				String texto = BoxOperacionRecargo.getItemAt(i).toString();
+				texto = texto.substring(0, 2);
+				
+				if(texto.equals(datos.getL6())) {
+					BoxOperacionRecargo.setSelectedIndex(i);
+				}
+			}
+			
+			//se selecciona la opcion guarda por ultima vez en el campo L12
+			for (int i = 0; i < BoxCausaNoSujecion.getItemCount(); i++) {
+				String texto = BoxCausaNoSujecion.getItemAt(i).toString();
+				texto = texto.substring(0, 2);
+				
+				if(texto.equals(datos.getL6())) {
+					BoxCausaNoSujecion.setSelectedIndex(i);
+				}
+			}
+		}	
+		manager.disconnect();
+	}
+	
+	public void cargarDatos(int tipo) {
+		DBManager manager = new DBManager();
+		manager.connect();
+		Connection connection =manager.connection;
+		SelectData selection = new SelectData();
+			
 		if(tipo == 6) {
 			L6 = selection.selectL6(connection);
 			for(int i = 0;i <L6.size();i++) {
@@ -262,7 +351,7 @@ public class PanelDatosXML extends JPanel {
 				Object firstKey = L9.keySet().toArray()[i];
 				Object valueForFirstKey = L9.get(firstKey);
 				BoxClaveRegimen.addItem("<html><body style='width: 370px; text-align: justify;margin-left: 20px;text-indent: -20px;'>" + new String(firstKey+" - "+valueForFirstKey));
-			}//irst-line:
+			}
 		}else if (tipo == 10) {
 			L10 = selection.selectL10(connection);
 			for(int i = 0;i < L10.size();i++) {

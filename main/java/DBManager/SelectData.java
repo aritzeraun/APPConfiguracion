@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 
+import DataType.DatosBasicos;
 import DataType.DatosConexion;
 import DataType.DatosXML;
 import DataType.FirmaElectronica;
@@ -107,7 +108,7 @@ public class SelectData {
 		return L;
 	}
 	
-	public DatosXML CreateTableDatosXML(Connection connection) {
+	public DatosXML selectDatosXML(Connection connection) {
 		
 		final String sql ="SELECT * FROM DATOS_XML;";
 		DatosXML DatosXML = null;
@@ -152,6 +153,26 @@ public class SelectData {
 				e.printStackTrace();
 			}
 		 return DatosConexion;
+	 }
+	
+	public DatosBasicos selectDatoBasicos(Connection connection) {
+		
+		final String sql = "SELECT * FROM DATOS_BASICOS;";
+		DatosBasicos DatosBasicos = null;
+		
+		 try (PreparedStatement pstmt = connection.prepareStatement(sql)){
+				ResultSet rs = pstmt.executeQuery();
+				while (rs.next()){
+					String DirectorioArchivosXML = rs.getString("DirectorioArchivosXML");
+	            	String DirectorioRecursos = rs.getString("DirectorioRecursos");
+	            	String DirectorioBaseDatos = rs.getString("DirectorioBaseDatos");
+	            	
+	            	DatosBasicos = new DatosBasicos(DirectorioArchivosXML, DirectorioRecursos, DirectorioBaseDatos);
+				}				 	      
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		 return DatosBasicos;
 	 }
 	
 	public FirmaElectronica selectFirmaElectronica(Connection connection) {

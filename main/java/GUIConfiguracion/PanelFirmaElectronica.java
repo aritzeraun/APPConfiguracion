@@ -332,7 +332,32 @@ public class PanelFirmaElectronica extends JPanel {
 		FirmaElectronica firma = selection.selectFirmaElectronica(connection);
 		if (firma != null) {
 			txtFieldLicenciaTBAI.setText(firma.getLicenciaTBAI());;
-			textFieldNIF.setText(firma.getNIF());
+			
+			if (firma.getNIF() != null) {
+				textFieldNIF.setText(firma.getNIF());
+			}
+			
+			if(firma.getCodigoPais() != null) {
+				//se selecciona la opcion guarda por ultima vez en el campo Codigo pais
+				for (int i = 0; i < boxCodigoPais.getItemCount(); i++) {
+					String texto = boxCodigoPais.getItemAt(i).toString();
+					texto = texto.substring(0, 2);
+					
+					if(texto.equals(firma.getCodigoPais())) {
+						boxCodigoPais.setSelectedIndex(i);
+					}
+				}
+				
+				//se selecciona la opcion guarda por ultima vez en el campo IDType
+				for (int i = 0; i < boxIDType.getItemCount(); i++) {
+					String texto = boxIDType.getItemAt(i).toString();
+					texto = texto.substring(0, 2);
+					
+					if(texto.equals(firma.getIDType())) {
+						boxIDType.setSelectedIndex(i);
+					}
+				}
+			}
 			textFieldID.setText(firma.getID());;
 			textFieldNombre.setText(firma.getNombre());
 			textFieldVersion.setText(firma.getVersion());;
@@ -363,10 +388,11 @@ public class PanelFirmaElectronica extends JPanel {
 		
 		if (CheckBoxIDOtro.isSelected() != false) {
 			ID = textFieldID.getText();
-			Object keyCodigoPais = L1.keySet().toArray()[boxCodigoPais.getSelectedIndex()];
-			CodigoPais =(String) keyCodigoPais;
-			Object keyIDType = L2.keySet().toArray()[boxIDType.getSelectedIndex()];
-			CodigoPais =(String) keyIDType;
+			CodigoPais = boxCodigoPais.getItemAt(boxCodigoPais.getSelectedIndex()).toString();
+			CodigoPais = CodigoPais.substring(0, 2);
+			
+			IDType = boxIDType.getItemAt(boxIDType.getSelectedIndex()).toString();
+			IDType = IDType.substring(0, 2);
 		}
 		
 		String Nombre = textFieldNombre.getText();

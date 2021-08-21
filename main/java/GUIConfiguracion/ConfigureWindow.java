@@ -134,7 +134,7 @@ public class ConfigureWindow extends JFrame {
 				CambairColorBotonesYEstadosPaneles();
 				DatosBasicos.setBackground(new Color(204, 102, 0));
 				
-				PanelDatosBasicos = new PanelDatosBasicos();
+				PanelDatosBasicos = new PanelDatosBasicos(estadoEdicion);
 				contentPane.add(PanelDatosBasicos, "cell 1 1,grow");
 				PanelDatosBasicos.setVisible(true);
 				contentPane.validate();
@@ -153,7 +153,7 @@ public class ConfigureWindow extends JFrame {
 				CambairColorBotonesYEstadosPaneles();
 				ButtonDatosXML.setBackground(new Color(204, 102, 0));
 				
-				PanelDatosXML = new PanelDatosXML();
+				PanelDatosXML = new PanelDatosXML(estadoEdicion);
 				contentPane.add(PanelDatosXML, "cell 1 1,grow");
 				PanelDatosXML.setVisible(true);
 				contentPane.validate();
@@ -233,8 +233,6 @@ public class ConfigureWindow extends JFrame {
 				PanelFirmaElectronica.setVisible(false);
 				contentPane.remove(PanelFirmaElectronica);
 			}
-			
-	
 	}
 	
 	public void CambairEstadoEdicion() {
@@ -265,17 +263,19 @@ public class ConfigureWindow extends JFrame {
 		}
 		
 		if(ventana == 1) {
-			
+			PanelDatosBasicos = new PanelDatosBasicos(estadoEdicion);
+			contentPane.add(PanelDatosBasicos, "cell 1 1,grow");
+			PanelDatosBasicos.setVisible(true);
+			contentPane.validate();
 		}
 		else if (ventana == 2) {
 			PanelConexionTBAI = new PanelConexionTBAI(estadoEdicion);
 			contentPane.add(PanelConexionTBAI, "cell 1 1,grow");
 			PanelConexionTBAI.setVisible(true);
 			contentPane.validate();
-
 		}
 		else if (ventana == 3) {
-			PanelDatosXML = new PanelDatosXML();
+			PanelDatosXML = new PanelDatosXML(estadoEdicion);
 			contentPane.add(PanelDatosXML, "cell 1 1,grow");
 			PanelDatosXML.setVisible(true);
 			contentPane.validate();
@@ -291,13 +291,16 @@ public class ConfigureWindow extends JFrame {
 	public void guardarDatosDatabase() {
 			
 		if(ventana == 1) {
+			PanelDatosBasicos.guardarDatos();
 			
 		}else if (ventana == 2) {
 			PanelConexionTBAI.guardarDatos();
 			
-		}else if (ventana == 4) {
-			PanelFirmaElectronica.guardarDatos();
+		}else if (ventana == 3) {
+			PanelDatosXML.guardarDatos();
 			
+		}else if (ventana == 4) {
+			PanelFirmaElectronica.guardarDatos();	
 		}
 	}
 }

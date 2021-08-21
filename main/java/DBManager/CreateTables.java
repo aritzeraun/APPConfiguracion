@@ -69,6 +69,12 @@ public class CreateTables {
 		crearTablas(connection, sql);
 	}
 	
+	public void CreateTableDatosBasicos(Connection connection) {
+		final String sql ="CREATE TABLE IF NOT EXISTS  DATOS_BASICOS (DirectorioArchivosXML text NOT NULL, DirectorioRecursos text NOT NULL,"
+				+ " DirectorioBaseDatos text NOT NULL);";
+		crearTablas(connection, sql);
+	}
+	
 	public void CreateTableDatosConexion(Connection connection) {
 		final String sql ="CREATE TABLE IF NOT EXISTS  DATOS_CONEXION (EnlaceAlta text NOT NULL, EnlaceAnulacion text NOT NULL);";
 		crearTablas(connection, sql);
