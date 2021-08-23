@@ -15,15 +15,16 @@ public class ReadFile {
 		String data = "";
 		BufferedReader objReader = null;
 		  try {
+			  
 		   String strCurrentLine;
-
 		   objReader = new BufferedReader(new FileReader(fileName));
 
 		   while ((strCurrentLine = objReader.readLine()) != null) {
-			 //  data = data+ strCurrentLine+"\n ";
 			   data = strCurrentLine;
-			   InsertData insert = new InsertData();
-			   insert.insert(data, connect);
+			   if(connect !=null) {
+				   InsertData insert = new InsertData();
+				   insert.insert(data, connect);
+			   } 
 		   }
 		  } catch (IOException e) {
 			  e.printStackTrace();

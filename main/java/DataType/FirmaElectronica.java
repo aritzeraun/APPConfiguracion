@@ -11,8 +11,6 @@ public class FirmaElectronica {
 	private String Version;
 	private String Dispositivo;
 	
-
-
 	public FirmaElectronica() {
 		super();
 		// TODO Auto-generated constructor stub

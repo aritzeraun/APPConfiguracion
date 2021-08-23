@@ -3,10 +3,12 @@ package GUIConfiguracion;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import javax.swing.ImageIcon;
@@ -19,7 +21,6 @@ import javax.swing.SwingConstants;
 
 public class ConfigureWindow extends JFrame {
 
-
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private PanelDatosBasicos PanelDatosBasicos;
@@ -31,12 +32,19 @@ public class ConfigureWindow extends JFrame {
 	private JButton ButtonConexionTBAI;
 	private JButton ButtonDatosXML;
 	private JButton ButtonFirmaElectronica;
-	private int ventana;
+	private int ventana = 1;
 	
 	public boolean estadoEdicion = false;
-
+	private String name;
+	private String url;
+	private String recursos;
 	
-	public ConfigureWindow() {
+	public ConfigureWindow(String name, String url, String recursos) {
+		
+		this.name = name;
+		this.url =url;
+		this.recursos = recursos;
+		
 		setForeground(new Color(255, 255, 255));
 		setBackground(new Color(255, 255, 255));
 		
@@ -112,9 +120,9 @@ public class ConfigureWindow extends JFrame {
 				guardarDatosDatabase();
 			}
 		});
-		PanelConexionTBAI = new PanelConexionTBAI(false);
-		contentPane.add(PanelConexionTBAI, "cell 1 1,grow");
-		PanelConexionTBAI.setVisible(true);
+		PanelDatosBasicos= new PanelDatosBasicos(false,name, url);
+		contentPane.add(PanelDatosBasicos, "cell 1 1,grow");
+		PanelDatosBasicos.setVisible(true);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 204, 102));
@@ -134,15 +142,17 @@ public class ConfigureWindow extends JFrame {
 				CambairColorBotonesYEstadosPaneles();
 				DatosBasicos.setBackground(new Color(204, 102, 0));
 				
-				PanelDatosBasicos = new PanelDatosBasicos(estadoEdicion);
+				PanelDatosBasicos = new PanelDatosBasicos(estadoEdicion, name, url);
 				contentPane.add(PanelDatosBasicos, "cell 1 1,grow");
 				PanelDatosBasicos.setVisible(true);
 				contentPane.validate();
+				ventana = 1;
 			}
 		});
 		panel.add(DatosBasicos, "cell 0 0,growx");
 		
 		ButtonDatosXML = new JButton("Datos XML");
+		ButtonDatosXML.setFont(new Font("Verdana", Font.PLAIN, 11));
 		ButtonDatosXML.setHorizontalAlignment(SwingConstants.LEFT);
 		ButtonDatosXML.setBorderPainted(false);
 		ButtonDatosXML.setIcon(new ImageIcon(".\\src\\main\\resources\\Iconos\\IconoDatosXML.png"));
@@ -153,14 +163,16 @@ public class ConfigureWindow extends JFrame {
 				CambairColorBotonesYEstadosPaneles();
 				ButtonDatosXML.setBackground(new Color(204, 102, 0));
 				
-				PanelDatosXML = new PanelDatosXML(estadoEdicion);
+				PanelDatosXML = new PanelDatosXML(estadoEdicion, name, url);
 				contentPane.add(PanelDatosXML, "cell 1 1,grow");
 				PanelDatosXML.setVisible(true);
 				contentPane.validate();
+				ventana = 3;
 			}
 		});
 				
 		ButtonConexionTBAI = new JButton("Conexion TBAI");
+		ButtonConexionTBAI.setFont(new Font("Verdana", Font.PLAIN, 11));
 		ButtonConexionTBAI.setHorizontalAlignment(SwingConstants.LEFT);
 		ButtonConexionTBAI.setFocusable(false);
 		ButtonConexionTBAI.setBorderPainted(false);
@@ -172,16 +184,18 @@ public class ConfigureWindow extends JFrame {
 				CambairColorBotonesYEstadosPaneles();
 				ButtonConexionTBAI.setBackground(new Color(204, 102, 0));
 				
-				PanelConexionTBAI = new PanelConexionTBAI(estadoEdicion);
+				PanelConexionTBAI = new PanelConexionTBAI(estadoEdicion, name, url);
 				contentPane.add(PanelConexionTBAI, "cell 1 1,grow");
 				PanelConexionTBAI.setVisible(true);
-				contentPane.validate();					 
+				contentPane.validate();	
+				ventana = 2;
 			}
 		});
 		panel.add(ButtonConexionTBAI, "cell 0 1,growx");
 		panel.add(ButtonDatosXML, "cell 0 2,growx");
 		
 		ButtonFirmaElectronica = new JButton("Firma Electr\u00F3nica");
+		ButtonFirmaElectronica.setFont(new Font("Verdana", Font.PLAIN, 11));
 		ButtonFirmaElectronica.setFocusable(false);
 		ButtonFirmaElectronica.setIcon(new ImageIcon(".\\src\\main\\resources\\Iconos\\IconoFirmaElectronica.png"));
 		ButtonFirmaElectronica.setBackground(new Color(255, 204, 102));
@@ -192,10 +206,11 @@ public class ConfigureWindow extends JFrame {
 				CambairColorBotonesYEstadosPaneles();
 				ButtonFirmaElectronica.setBackground(new Color(204, 102, 0));
 				
-				PanelFirmaElectronica = new PanelFirmaElectronica(estadoEdicion);
+				PanelFirmaElectronica = new PanelFirmaElectronica(estadoEdicion, name, url);
 				contentPane.add(PanelFirmaElectronica, "cell 1 1,grow");
 				PanelFirmaElectronica.setVisible(true);
 				contentPane.validate();
+				ventana = 4;
 			}
 		});
 		panel.add(ButtonFirmaElectronica, "cell 0 3,growx");		
@@ -237,51 +252,38 @@ public class ConfigureWindow extends JFrame {
 	
 	public void CambairEstadoEdicion() {
 		
-		ventana = 0;
-		if(PanelDatosBasicos !=null) {
+		if(ventana == 1) {
 			PanelDatosBasicos.setVisible(false);
 			contentPane.remove(PanelDatosBasicos);
-			ventana = 1;
-		}
-		
-		if(PanelConexionTBAI !=null) {
-			PanelConexionTBAI.setVisible(false);
-			contentPane.remove(PanelConexionTBAI);
-			ventana = 2;
-		}
-		
-		if(PanelDatosXML !=null) {
-			PanelDatosXML.setVisible(false);
-			contentPane.remove(PanelDatosXML);
-			ventana = 3;
-		}
-		
-		if(PanelFirmaElectronica !=null ) {
-			PanelFirmaElectronica.setVisible(false);
-			contentPane.remove(PanelFirmaElectronica);
-			ventana = 4;
-		}
-		
-		if(ventana == 1) {
-			PanelDatosBasicos = new PanelDatosBasicos(estadoEdicion);
+			
+			PanelDatosBasicos = new PanelDatosBasicos(estadoEdicion, name, url);
 			contentPane.add(PanelDatosBasicos, "cell 1 1,grow");
 			PanelDatosBasicos.setVisible(true);
 			contentPane.validate();
 		}
 		else if (ventana == 2) {
-			PanelConexionTBAI = new PanelConexionTBAI(estadoEdicion);
+			PanelConexionTBAI.setVisible(false);
+			contentPane.remove(PanelConexionTBAI);
+			
+			PanelConexionTBAI = new PanelConexionTBAI(estadoEdicion,name, url);
 			contentPane.add(PanelConexionTBAI, "cell 1 1,grow");
 			PanelConexionTBAI.setVisible(true);
 			contentPane.validate();
 		}
 		else if (ventana == 3) {
-			PanelDatosXML = new PanelDatosXML(estadoEdicion);
+			PanelDatosXML.setVisible(false);
+			contentPane.remove(PanelDatosXML); 
+			
+			PanelDatosXML = new PanelDatosXML(estadoEdicion, name, url);
 			contentPane.add(PanelDatosXML, "cell 1 1,grow");
 			PanelDatosXML.setVisible(true);
 			contentPane.validate();
 		}
 		else if (ventana == 4) {
-			PanelFirmaElectronica = new PanelFirmaElectronica(estadoEdicion);
+			PanelFirmaElectronica.setVisible(false);
+			contentPane.remove(PanelFirmaElectronica);
+			
+			PanelFirmaElectronica = new PanelFirmaElectronica(estadoEdicion, name, url);
 			contentPane.add(PanelFirmaElectronica, "cell 1 1,grow");
 			PanelFirmaElectronica.setVisible(true);
 			contentPane.validate();
@@ -292,6 +294,8 @@ public class ConfigureWindow extends JFrame {
 			
 		if(ventana == 1) {
 			PanelDatosBasicos.guardarDatos();
+			PanelDatosBasicos.moverFicheros(recursos);
+			dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));;
 			
 		}else if (ventana == 2) {
 			PanelConexionTBAI.guardarDatos();

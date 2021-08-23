@@ -22,8 +22,13 @@ public class PanelConexionTBAI extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTextField textFieldAlta;
 	private JTextField textFieldAnulacion;
+	private String name;
+	private String url;
 
-	public PanelConexionTBAI(boolean estadoEdicion) {
+	public PanelConexionTBAI(boolean estadoEdicion, String name, String url) {
+		
+		this.name = name;
+		this.url = url;
 		
 		setBackground(new Color(255, 204, 51));
 		setVisible(false);
@@ -80,7 +85,7 @@ public class PanelConexionTBAI extends JPanel {
 	}
 
 	public void cargarDatos() {
-		DBManager manager = new DBManager();
+		DBManager manager = new DBManager(name, url);
 		manager.connect();
 		Connection connection =manager.connection;
 		SelectData selection = new SelectData();
@@ -94,7 +99,7 @@ public class PanelConexionTBAI extends JPanel {
 	}
 	
 	public void guardarDatos() {
-		DBManager manager = new DBManager();
+		DBManager manager = new DBManager(name, url);
 		manager.connect();
 		Connection connection = manager.connection;
 		

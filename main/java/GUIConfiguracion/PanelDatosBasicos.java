@@ -6,6 +6,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 
 import javax.swing.JFileChooser;
@@ -17,6 +18,7 @@ import DBManager.DBManager;
 import DBManager.InsertData;
 import DBManager.SelectData;
 import DataType.DatosBasicos;
+import ReadingFiles.FicheroOculto;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -33,8 +35,16 @@ public class PanelDatosBasicos extends JPanel {
 	private JButton ButtonBD;
 	private JLabel lblNewLabel;
 	private JLabel txtDirectorioBD;
+	private String name;
+	private String url;
+	private JTextField textFieldNombreBD;
+	private JLabel txtNombreBD;
 
-	public PanelDatosBasicos(boolean estadoEdicion) {
+	public PanelDatosBasicos(boolean estadoEdicion, String name,String  url) {
+		
+		this.name = name;
+		this.url = url;
+		
 		setFont(new Font("Trebuchet MS", Font.BOLD, 11));
 		
 		setBackground(new Color(255, 204, 51));
@@ -42,9 +52,9 @@ public class PanelDatosBasicos extends JPanel {
 		
 		GridBagLayout gbl_Panelcentral = new GridBagLayout();
 		gbl_Panelcentral.columnWidths = new int[]{174, 403, -1, 0};
-		gbl_Panelcentral.rowHeights = new int[]{80, 26, 0, 0, 0, 0, 0};
+		gbl_Panelcentral.rowHeights = new int[]{80, 26, 0, 0, 0, 0, 0, 0, 0};
 		gbl_Panelcentral.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_Panelcentral.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_Panelcentral.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gbl_Panelcentral);
 		
 		lblNewLabel = new JLabel("<html><body style='width: 350px; text-align: justify;'>A continuaci\u00F3n se muestran los distintos directorios o direcciones de relevancia para el correcto funcionamiento del sistema. Configure dichas direecciones a corde con las necesidades: ");
@@ -101,8 +111,8 @@ public class PanelDatosBasicos extends JPanel {
 		JLabel txtDirecetorioRecursos = new JLabel("Directorio a Recursos del Sistema: ");
 		txtDirecetorioRecursos.setFont(new Font("Trebuchet MS", Font.BOLD, 11));
 		GridBagConstraints gbc_txtDirecetorioRecursos = new GridBagConstraints();
+		gbc_txtDirecetorioRecursos.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtDirecetorioRecursos.insets = new Insets(0, 0, 5, 5);
-		gbc_txtDirecetorioRecursos.anchor = GridBagConstraints.NORTHEAST;
 		gbc_txtDirecetorioRecursos.gridx = 0;
 		gbc_txtDirecetorioRecursos.gridy = 3;
 		add(txtDirecetorioRecursos, gbc_txtDirecetorioRecursos);
@@ -112,7 +122,7 @@ public class PanelDatosBasicos extends JPanel {
 		textFieldRecursos.setEnabled(estadoEdicion);
 		GridBagConstraints gbc_textFieldRecursos = new GridBagConstraints();
 		gbc_textFieldRecursos.insets = new Insets(0, 0, 5, 5);
-		gbc_textFieldRecursos.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textFieldRecursos.fill = GridBagConstraints.BOTH;
 		gbc_textFieldRecursos.gridx = 1;
 		gbc_textFieldRecursos.gridy = 3;
 		add(textFieldRecursos, gbc_textFieldRecursos);
@@ -141,7 +151,7 @@ public class PanelDatosBasicos extends JPanel {
 		txtDirectorioBD = new JLabel("Directorio a Base de Datos: ");
 		txtDirectorioBD.setFont(new Font("Trebuchet MS", Font.BOLD, 11));
 		GridBagConstraints gbc_txtDirectorioBD = new GridBagConstraints();
-		gbc_txtDirectorioBD.insets = new Insets(0, 0, 0, 5);
+		gbc_txtDirectorioBD.insets = new Insets(0, 0, 5, 5);
 		gbc_txtDirectorioBD.anchor = GridBagConstraints.EAST;
 		gbc_txtDirectorioBD.gridx = 0;
 		gbc_txtDirectorioBD.gridy = 5;
@@ -151,8 +161,8 @@ public class PanelDatosBasicos extends JPanel {
 		textFieldBD.setEditable(estadoEdicion);
 		textFieldBD.setEnabled(estadoEdicion);
 		GridBagConstraints gbc_textFieldBD = new GridBagConstraints();
-		gbc_textFieldBD.insets = new Insets(0, 0, 0, 5);
-		gbc_textFieldBD.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textFieldBD.insets = new Insets(0, 0, 5, 5);
+		gbc_textFieldBD.fill = GridBagConstraints.BOTH;
 		gbc_textFieldBD.gridx = 1;
 		gbc_textFieldBD.gridy = 5;
 		add(textFieldBD, gbc_textFieldBD);
@@ -173,9 +183,32 @@ public class PanelDatosBasicos extends JPanel {
 			}
 		});
 		GridBagConstraints gbc_ButtonBD = new GridBagConstraints();
+		gbc_ButtonBD.insets = new Insets(0, 0, 5, 0);
 		gbc_ButtonBD.gridx = 2;
 		gbc_ButtonBD.gridy = 5;
 		add(ButtonBD, gbc_ButtonBD);
+		
+		txtNombreBD = new JLabel("Nombre de Base de Datos: ");
+		txtNombreBD.setFont(new Font("Trebuchet MS", Font.BOLD, 11));
+		GridBagConstraints gbc_txtNombreBD = new GridBagConstraints();
+		gbc_txtNombreBD.insets = new Insets(0, 0, 0, 5);
+		gbc_txtNombreBD.anchor = GridBagConstraints.EAST;
+		gbc_txtNombreBD.gridx = 0;
+		gbc_txtNombreBD.gridy = 7;
+		add(txtNombreBD, gbc_txtNombreBD);
+		
+		textFieldNombreBD = new JTextField();
+		textFieldNombreBD.setEditable(estadoEdicion);
+		textFieldNombreBD.setEnabled(estadoEdicion);
+		GridBagConstraints gbc_textFieldNombreBD = new GridBagConstraints();
+		gbc_textFieldNombreBD.insets = new Insets(0, 0, 0, 5);
+		gbc_textFieldNombreBD.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textFieldNombreBD.gridx = 1;
+		gbc_textFieldNombreBD.gridy = 7;
+		add(textFieldNombreBD, gbc_textFieldNombreBD);
+		textFieldNombreBD.setColumns(10);
+		
+		cargarDatos();
 	}
 	
 	public String seleccionDirectorio() {
@@ -195,22 +228,24 @@ public class PanelDatosBasicos extends JPanel {
 		return direccion;
 	}
 	
-	public void cargarDatos(int tipo) {
-		DBManager manager = new DBManager();
+	public void cargarDatos() {
+		DBManager manager = new DBManager(name,url);
 		manager.connect();
 		Connection connection =manager.connection;
 		SelectData selection = new SelectData();
-		
 		DatosBasicos datos = selection.selectDatoBasicos(connection);
-		txtFieldArchivosXML.setText(datos.getDirectorioArchivosXML());
-		textFieldRecursos.setText(datos.getDirectorioRecursos());
-		textFieldBD.setText(datos.getDirectorioBaseDatos());
+		if (datos != null) {
+			txtFieldArchivosXML.setText(datos.getDirectorioArchivosXML());
+			textFieldRecursos.setText(datos.getDirectorioRecursos());
+			textFieldBD.setText(datos.getDirectorioBaseDatos());
+			textFieldNombreBD.setText(datos.getNombreBaseBatos());
+		}
 		
 		manager.disconnect();
 	}
 
 	public void guardarDatos() {
-		DBManager manager = new DBManager();
+		DBManager manager = new DBManager(name, url);
 		manager.connect();
 		Connection connection = manager.connection;
 		InsertData insert  = new InsertData();
@@ -218,9 +253,22 @@ public class PanelDatosBasicos extends JPanel {
 		String DirectorioRecursos = textFieldRecursos.getText();
 		String DirectorioBD = textFieldBD.getText();
 		String DirectorioXML = txtFieldArchivosXML.getText();
+		String NombreBaseBatos = textFieldNombreBD.getText();
+		if(NombreBaseBatos.endsWith(".db") == false) {
+			NombreBaseBatos = NombreBaseBatos +".db";
+		}
 		
-		DatosBasicos datos = new DatosBasicos(DirectorioXML, DirectorioRecursos,DirectorioBD);
+		DatosBasicos datos = new DatosBasicos(DirectorioXML, DirectorioRecursos,DirectorioBD,NombreBaseBatos);
 		insert.insertDatosBasicos(datos, connection);
 		manager.disconnect();
+	}
+	
+	public void moverFicheros(String recursos) {
+		FicheroOculto fichero = new FicheroOculto();
+		try {
+			fichero.moverFiceheros(textFieldRecursos.getText(), recursos,textFieldNombreBD.getText(), name,textFieldBD.getText(), url );
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

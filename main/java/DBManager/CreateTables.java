@@ -57,21 +57,22 @@ public class CreateTables {
 	}
 	
 	public void CreateTableFirmaElectronica(Connection connection) {
-		final String sql ="CREATE TABLE IF NOT EXISTS  FIRMA_ELECTRONICA (LicenciaTBAI text, NIF text, CodigoPais text, IDtype text,"
-				+ " ID text, Nombre text, Version text, Dispositivo text);";
+		final String sql ="CREATE TABLE IF NOT EXISTS  FIRMA_ELECTRONICA (LicenciaTBAI text NOT NULL, NIF text NOT NULL, "
+				+ "CodigoPais text NOT NULL, IDtype text NOT NULL, ID text NOT NULL, Nombre text NOT NULL, Version text NOT NULL,"
+				+ " Dispositivo text NOT NULL);";
 		crearTablas(connection, sql);
 	}
 	
 	public void CreateTableDatosXML(Connection connection) {
 		final String sql ="CREATE TABLE IF NOT EXISTS  DATOS_XML (IDVersionTBAI text NOT NULL, NIF text NOT NULL, RazonSocial text NOT NULL,"
-				+ "L6 varchar(2) NOT NULL, L9 varchar(2) NOT NULL, L10 varchar(2) NOT NULL, L11 varchar(2) NOT NULL,"
-				+ "L12 varchar(2) NOT NULL, L13 varchar(2) NOT NULL);";
+				+ "L6 varchar(1) NOT NULL, L9 varchar(2) NOT NULL, L10 varchar(2) NOT NULL, L11 varchar(2) NOT NULL,"
+				+ "L12 varchar(1) NOT NULL, L13 varchar(2) NOT NULL);";
 		crearTablas(connection, sql);
 	}
 	
 	public void CreateTableDatosBasicos(Connection connection) {
 		final String sql ="CREATE TABLE IF NOT EXISTS  DATOS_BASICOS (DirectorioArchivosXML text NOT NULL, DirectorioRecursos text NOT NULL,"
-				+ " DirectorioBaseDatos text NOT NULL);";
+				+ " DirectorioBaseDatos text NOT NULL, NombreBaseBatos text NOT NULL);";
 		crearTablas(connection, sql);
 	}
 	

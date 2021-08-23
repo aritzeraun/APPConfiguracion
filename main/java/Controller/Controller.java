@@ -1,66 +1,48 @@
 package Controller;
 
-import DBManager.CreateTables;
+
+
+import java.io.File;
+import java.io.IOException;
+
 import DBManager.DBManager;
 import GUIConfiguracion.ConfigureWindow;
+import ReadingFiles.FicheroOculto;
 import ReadingFiles.ReadFile;
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+
 
 
 public class Controller {
 	
 	public static void main (String[] args) {
-
-		String url = "jdbc:sqlite:" +"TBAIDatabase.db";
-
-		try (Connection conn = DriverManager.getConnection(url)) {
-			if (conn != null) {
-				DatabaseMetaData meta = conn.getMetaData();
-		        System.out.println("The driver name is " + meta.getDriverName());
-		        System.out.println("A new database has been created.");
-		        
-		        DBManager manager = new DBManager();
-		        manager.connect();
-		        Connection conect =manager.connection;
-		        CreateTables table = new CreateTables(); 
-		        table.CreateTableL1(conect);
-		        table.CreateTableL2(conect);
-		        table.CreateTableL6(conect);
-		        table.CreateTableL9(conect);
-		        table.CreateTableL10(conect);
-		        table.CreateTableL11(conect);
-		        table.CreateTableL12(conect);
-		        table.CreateTableL13(conect);
-		        table.CreateTableDatosConexion(conect);
-		        table.CreateTableDatosXML(conect);
-		        table.CreateTableFirmaElectronica(conect);
-		        manager.disconnect();
-		        
-		        manager.connect();
-		        Connection conecti =manager.connection;
-		        
-		        ReadFile read = new ReadFile();
-		        read.read(".\\src\\main\\resources\\ArchivosPlanos\\L1.txt", conecti);
-		        read.read(".\\src\\main\\resources\\ArchivosPlanos\\L2.txt", conecti);
-		        read.read(".\\src\\main\\resources\\ArchivosPlanos\\L6.txt", conecti);
-		        read.read(".\\src\\main\\resources\\ArchivosPlanos\\L9.txt", conecti);
-		        read.read(".\\src\\main\\resources\\ArchivosPlanos\\L10.txt", conecti);
-		        read.read(".\\src\\main\\resources\\ArchivosPlanos\\L11.txt", conecti);
-		        read.read(".\\src\\main\\resources\\ArchivosPlanos\\L12.txt", conecti);
-		        read.read(".\\src\\main\\resources\\ArchivosPlanos\\L13.txt", conecti);
-		        manager.disconnect();
-		        ConfigureWindow panelPrincipal = new ConfigureWindow();
-		        panelPrincipal.setVisible(true);
-		        
-                if(conect ==null) {
-                	
-                }
-            }
-        } catch (SQLException e) {
-		        System.out.println(e.getMessage());
+		
+		//Verificamos si existe el fichero oculto de configuracion y, en su caso, lo creamos
+		String filePathString =".\\ficheroDeConfiguracion.txt";
+		
+		File f = new File(filePathString);
+		if(f.exists() || f.isHidden() == true) { 
+		}else {
+			FicheroOculto ficeheroOculto = new FicheroOculto();
+			try {
+				ficeheroOculto.CrearFicheroOculto(".txt", "ficheroDeConfiguracion",".\\", ";TBAIDatabase.db;.\\src\\main\\resources\\ArchivosPlanos\\");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
+		
+		ReadFile reder =  new ReadFile();
+		String datos =reder.read(filePathString, null);
+		String[]datosSeparados =datos.split(";");
+		
+		File baseDatos = new File(datosSeparados[0] + datosSeparados[1]);
+		if (baseDatos.exists()) {
+			//la base de datos existe
+		}else {
+			DBManager manager = new DBManager(datosSeparados[1], "jdbc:sqlite:"+datosSeparados[0]);
+			manager.crearBaseDatos(datosSeparados[1], "jdbc:sqlite:"+datosSeparados[0], datosSeparados[2]);
+		}
+
+		ConfigureWindow framePrincipal = new ConfigureWindow(datosSeparados[1], "jdbc:sqlite:"+datosSeparados[0], datosSeparados[2]);
+		framePrincipal.setVisible(true);	
 	}
 }

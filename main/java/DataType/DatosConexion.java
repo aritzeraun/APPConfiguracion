@@ -5,7 +5,6 @@ public class DatosConexion {
 	private String EnlaceAlta;
 	private String EnlaceBaja;
 	
-
 	public DatosConexion(String enlaceAlta, String enlaceBaja) {
 		super();
 		this.EnlaceAlta = enlaceAlta;

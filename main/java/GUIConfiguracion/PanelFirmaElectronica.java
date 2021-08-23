@@ -48,8 +48,12 @@ public class PanelFirmaElectronica extends JPanel {
 	
 	private HashMap<String, String> L1 ;
 	private HashMap<String, String> L2;
+	private String name;
+	private String url;
 
-	public PanelFirmaElectronica(boolean estadoEdicion) {
+	public PanelFirmaElectronica(boolean estadoEdicion, String name, String url) {
+		this.name = name;
+		this.url = url;
 		
 		setBackground(new Color(255, 204, 51));
 		setVisible(false);
@@ -83,6 +87,7 @@ public class PanelFirmaElectronica extends JPanel {
 		txtFieldLicenciaTBAI.setColumns(10);
 		
 		lblNewLabel = new JLabel("Persona o Entidad Desarrolladora");
+		lblNewLabel.setFont(new Font("Trebuchet MS", Font.BOLD, 11));
 		lblNewLabel.setVerticalTextPosition(SwingConstants.BOTTOM);
 		lblNewLabel.setVerticalAlignment(SwingConstants.BOTTOM);
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
@@ -302,7 +307,7 @@ public class PanelFirmaElectronica extends JPanel {
 	}
 	
 	public void cargarDatos(int tipo) {
-		DBManager manager = new DBManager();
+		DBManager manager = new DBManager(name, url);
 		manager.connect();
 		Connection connection =manager.connection;
 		SelectData selection = new SelectData();
@@ -325,7 +330,7 @@ public class PanelFirmaElectronica extends JPanel {
 		manager.disconnect();
 	}
 	public void cargarValoresTexto() {
-		DBManager manager = new DBManager();
+		DBManager manager = new DBManager(name, url);
 		manager.connect();
 		Connection connection =manager.connection;
 		SelectData selection = new SelectData();
@@ -366,7 +371,7 @@ public class PanelFirmaElectronica extends JPanel {
 		manager.disconnect();
 	}
 	public void guardarDatos() {
-		DBManager manager = new DBManager();
+		DBManager manager = new DBManager(name, url);
 		manager.connect();
 		Connection connection = manager.connection;
 		

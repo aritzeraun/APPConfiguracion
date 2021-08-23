@@ -49,10 +49,14 @@ public class PanelDatosXML extends JPanel {
 	private HashMap<String, String> L11;
 	private HashMap<String, String> L12;
 	private HashMap<String, String> L13;
-	
+	private String name;
+	private String url;
 
 	
-	public PanelDatosXML(boolean estadoEdicion) {
+	public PanelDatosXML(boolean estadoEdicion, String name, String url) {
+		
+		this.name = name;
+		this.url = url;
 			
 		setBackground(new Color(255, 204, 51));
 		setVisible(false);
@@ -86,6 +90,7 @@ public class PanelDatosXML extends JPanel {
 		textFieldIDVersionTBAI.setColumns(10);
 		
 		lblNewLabel_1 = new JLabel("Persona o Entidad Desarrolladora");
+		lblNewLabel_1.setFont(new Font("Trebuchet MS", Font.BOLD, 11));
 		lblNewLabel_1.setVerticalTextPosition(SwingConstants.BOTTOM);
 		lblNewLabel_1.setVerticalAlignment(SwingConstants.BOTTOM);
 		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
@@ -115,7 +120,7 @@ public class PanelDatosXML extends JPanel {
 		textFieldRazonSocial.setColumns(10);
 		
 		txtNIF = new JLabel("NIF: ");
-		txtNIF.setFont(new Font("Trebuchet MS", Font.PLAIN, 11));
+		txtNIF.setFont(new Font("Trebuchet MS", Font.BOLD, 11));
 		GridBagConstraints gbc_txtNIF = new GridBagConstraints();
 		gbc_txtNIF.insets = new Insets(0, 0, 5, 5);
 		gbc_txtNIF.anchor = GridBagConstraints.EAST;
@@ -135,7 +140,7 @@ public class PanelDatosXML extends JPanel {
 		textFieldNIF.setColumns(10);
 		
 		txtTipoDeFactura = new JLabel("Tipo de Factura: ");
-		txtTipoDeFactura.setFont(new Font("Trebuchet MS", Font.PLAIN, 11));
+		txtTipoDeFactura.setFont(new Font("Trebuchet MS", Font.BOLD, 11));
 		GridBagConstraints gbc_txtTipoDeFactura = new GridBagConstraints();
 		gbc_txtTipoDeFactura.insets = new Insets(0, 0, 5, 5);
 		gbc_txtTipoDeFactura.anchor = GridBagConstraints.EAST;
@@ -155,8 +160,8 @@ public class PanelDatosXML extends JPanel {
 		add(BoxTipoFactura, gbc_BoxTipoFactura);
 		
 		txtClaveRegimen = new JLabel("Clave de r\u00E9gimen especial del IVA y operaciones con transparencia tributaria");
+		txtClaveRegimen.setFont(new Font("Trebuchet MS", Font.BOLD, 11));
 		GridBagConstraints gbc_txtClaveRegimen = new GridBagConstraints();
-		gbc_txtClaveRegimen.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtClaveRegimen.insets = new Insets(0, 0, 5, 5);
 		gbc_txtClaveRegimen.gridx = 1;
 		gbc_txtClaveRegimen.gridy = 8;
@@ -178,6 +183,7 @@ public class PanelDatosXML extends JPanel {
 		add(BoxClaveRegimen, gbc_BoxClaveRegimen);
 		
 		txtCausaExencion = new JLabel("Causa de exenci\u00F3n de operaciones sujetas y exentas");
+		txtCausaExencion.setFont(new Font("Trebuchet MS", Font.BOLD, 11));
 		GridBagConstraints gbc_txtCausaExencion = new GridBagConstraints();
 		gbc_txtCausaExencion.insets = new Insets(0, 0, 5, 5);
 		gbc_txtCausaExencion.gridx = 1;
@@ -196,6 +202,7 @@ public class PanelDatosXML extends JPanel {
 		add(BoxCausaExencion, gbc_BoxCausaExencion);
 		
 		txtTipoNoExenta = new JLabel("Tipo no Exenta: ");
+		txtTipoNoExenta.setFont(new Font("Trebuchet MS", Font.BOLD, 11));
 		GridBagConstraints gbc_txtTipoNoExenta = new GridBagConstraints();
 		gbc_txtTipoNoExenta.insets = new Insets(0, 0, 5, 5);
 		gbc_txtTipoNoExenta.anchor = GridBagConstraints.EAST;
@@ -216,6 +223,7 @@ public class PanelDatosXML extends JPanel {
 		add(BoxTipoNoExenta, gbc_BoxTipoNoExenta);
 		
 		txtOperacionRecargo = new JLabel("Operaci\u00F3n en recargo de equivalencia o r\u00E9gimen simplificado");
+		txtOperacionRecargo.setFont(new Font("Trebuchet MS", Font.BOLD, 11));
 		GridBagConstraints gbc_txtOperacionRecargo = new GridBagConstraints();
 		gbc_txtOperacionRecargo.insets = new Insets(0, 0, 5, 5);
 		gbc_txtOperacionRecargo.gridx = 1;
@@ -257,7 +265,7 @@ public class PanelDatosXML extends JPanel {
 	}
 	 
 	public void cargarDatosSeleccionados() {
-		DBManager manager = new DBManager();
+		DBManager manager = new DBManager(name, url);
 		manager.connect();
 		Connection connection =manager.connection;
 		SelectData selection = new SelectData();
@@ -333,7 +341,7 @@ public class PanelDatosXML extends JPanel {
 	}
 	
 	public void cargarDatos(int tipo) {
-		DBManager manager = new DBManager();
+		DBManager manager = new DBManager(name, url);
 		manager.connect();
 		Connection connection =manager.connection;
 		SelectData selection = new SelectData();
@@ -385,7 +393,7 @@ public class PanelDatosXML extends JPanel {
 	}
 
 	public void guardarDatos() {
-		DBManager manager = new DBManager();
+		DBManager manager = new DBManager(name, url);
 		manager.connect();
 		Connection connection = manager.connection;
 		InsertData insert  = new InsertData();
@@ -393,26 +401,44 @@ public class PanelDatosXML extends JPanel {
 		String IDVersionTBAI = textFieldIDVersionTBAI.getText();
 		String NIF = textFieldNIF.getText();
 		String RazonSocial = textFieldRazonSocial.getText();
+		String TipoFactura = null;
+		String ClaveRegimen = null;
+		String CausaExencion = null;
+		String TipoNoExenta = null;
+		String OperacionRecargo = null;
+		String CausaNoSujecion = null;
 		
-		Object keyL6 = L6.keySet().toArray()[BoxTipoFactura.getSelectedIndex()];
-		String L6 = (String) keyL6;
+		if (BoxTipoFactura.getSelectedItem() != null) {
+			TipoFactura = BoxTipoFactura.getItemAt(BoxTipoFactura.getSelectedIndex()).toString();
+			TipoFactura = TipoFactura.substring(0, 1);
+		}
 		
-		Object keyL9 = L9.keySet().toArray()[BoxClaveRegimen.getSelectedIndex()];
-		String L9 = (String) keyL9;
+		if (BoxClaveRegimen.getSelectedItem() != null) {
+			ClaveRegimen = BoxClaveRegimen.getItemAt(BoxClaveRegimen.getSelectedIndex()).toString();
+			ClaveRegimen = ClaveRegimen.substring(92, 94);
+		}
 		
-		Object keyL10 = L10.keySet().toArray()[BoxCausaExencion.getSelectedIndex()];
-		String L10 = (String) keyL10;
+		if (BoxClaveRegimen.getSelectedItem() != null) {
+			CausaExencion = BoxCausaExencion.getItemAt(BoxCausaExencion.getSelectedIndex()).toString();
+			CausaExencion = CausaExencion.substring(0, 2);
+		}
 		
-		Object keyL11 = L11.keySet().toArray()[BoxTipoNoExenta.getSelectedIndex()];
-		String L11 = (String) keyL11;
+		if (BoxTipoNoExenta.getSelectedItem() != null) {
+			TipoNoExenta = BoxTipoNoExenta.getItemAt(BoxTipoNoExenta.getSelectedIndex()).toString();
+			TipoNoExenta = TipoNoExenta.substring(0, 2);
+		}
 		
-		Object keyL12 = L12.keySet().toArray()[BoxOperacionRecargo.getSelectedIndex()];
-		String L12 = (String) keyL12;
+		if (BoxOperacionRecargo.getSelectedItem() != null) {
+			OperacionRecargo = BoxOperacionRecargo.getItemAt(BoxOperacionRecargo.getSelectedIndex()).toString();
+			OperacionRecargo = OperacionRecargo.substring(0, 1);
+		}
 		
-		Object keyL13 = L13.keySet().toArray()[BoxCausaNoSujecion.getSelectedIndex()];
-		String L13 = (String) keyL13;
-		
-		DatosXML datos = new DatosXML(IDVersionTBAI, NIF, RazonSocial, L6, L9, L10, L11, L12, L13);
+		if (BoxCausaNoSujecion.getSelectedItem() != null) {
+			CausaNoSujecion = BoxCausaNoSujecion.getItemAt(BoxCausaNoSujecion.getSelectedIndex()).toString();
+			CausaNoSujecion = CausaNoSujecion.substring(0, 2);
+		}		
+
+		DatosXML datos = new DatosXML(IDVersionTBAI, NIF, RazonSocial, TipoFactura, ClaveRegimen, CausaExencion, TipoNoExenta, OperacionRecargo, CausaNoSujecion);
 		insert.insertDatosXML(datos, connection);
 		manager.disconnect();
 	}

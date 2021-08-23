@@ -4,12 +4,14 @@ public class DatosBasicos {
 	private String DirectorioArchivosXML;
 	private String DirectorioRecursos;
 	private String DirectorioBaseDatos;
+	private String NombreBaseBatos;
 	
-	public DatosBasicos(String directorioArchivosXML, String directorioRecursos, String directorioBaseDatos) {
+	public DatosBasicos(String directorioArchivosXML, String directorioRecursos, String directorioBaseDatos,String NombreBaseBatos) {
 		super();
-		DirectorioArchivosXML = directorioArchivosXML;
-		DirectorioRecursos = directorioRecursos;
-		DirectorioBaseDatos = directorioBaseDatos;
+		this.DirectorioArchivosXML = directorioArchivosXML;
+		this.DirectorioRecursos = directorioRecursos;
+		this.DirectorioBaseDatos = directorioBaseDatos;
+		this.NombreBaseBatos = NombreBaseBatos;
 	}
 
 	public DatosBasicos() {
@@ -38,5 +40,13 @@ public class DatosBasicos {
 
 	public void setDirectorioBaseDatos(String directorioBaseDatos) {
 		DirectorioBaseDatos = directorioBaseDatos;
+	}
+
+	public String getNombreBaseBatos() {
+		return NombreBaseBatos;
+	}
+
+	public void setNombreBaseBatos(String nombreBaseBatos) {
+		NombreBaseBatos = nombreBaseBatos;
 	}
 }

@@ -46,7 +46,7 @@ public class InsertData {
 			 	pstmt.setString(6, datos.getL10());
 			 	pstmt.setString(7, datos.getL11());
 			 	pstmt.setString(8, datos.getL12());
-			 	pstmt.setString(8, datos.getL13());
+			 	pstmt.setString(9, datos.getL13());
 			 	
 	            pstmt.executeUpdate();
 	        } catch (SQLException e) {

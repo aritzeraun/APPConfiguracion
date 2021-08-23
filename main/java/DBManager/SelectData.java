@@ -166,8 +166,9 @@ public class SelectData {
 					String DirectorioArchivosXML = rs.getString("DirectorioArchivosXML");
 	            	String DirectorioRecursos = rs.getString("DirectorioRecursos");
 	            	String DirectorioBaseDatos = rs.getString("DirectorioBaseDatos");
+	            	String NombreBaseBatos= rs.getString("NombreBaseBatos");
 	            	
-	            	DatosBasicos = new DatosBasicos(DirectorioArchivosXML, DirectorioRecursos, DirectorioBaseDatos);
+	            	DatosBasicos = new DatosBasicos(DirectorioArchivosXML, DirectorioRecursos, DirectorioBaseDatos, NombreBaseBatos);
 				}				 	      
 			} catch (SQLException e) {
 				e.printStackTrace();
